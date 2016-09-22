@@ -1,0 +1,24 @@
+<?xml	version="1.0"?>
+<project	name="ApplicationBuildName"	basedir="."	default="unittest">
+<target	name="unittest">
+				<phpunit	bootstrap="tests/test1.php" pharlocation="/usr/local/bin/phpunit">
+
+								<formatter	type="summary"	usefile="false"	/>
+								<batchtest>
+												<fileset	dir="tests">
+																<include	name="**/*tests.php"/>
+												</fileset>
+								</batchtest>
+				</phpunit>
+		</target>
+
+		<target	name="zpk"	depends="unittest">
+				<exec	command="php	/Users/Earth/zs-client.phar	packZpk	--folder='${project.basedir}'	--
+destination='${project.basedir}'	--name='application.zpk'"	checkreturn="true"/>
+		</target>
+
+		<target	name="deploy"	depends="zpk">
+				<exec	command="php	/Users/Earth/zs-client.phar	installApp	--
+zpk='${project.basedir}/application.zpk'"	checkreturn="true"/>
+		</target>
+</project>
